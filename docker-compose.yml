@@ -1,0 +1,23 @@
+version: '3'
+services: 
+ 
+  heroweb:
+    image: heroweb
+    build: ./heroweb
+    container_name: heroweb   
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s   
+    ports:
+      - '8080:8080'
+    volumes:
+      - /opt/heroweb/logs/:/opt/heroweb/logs
+    networks:
+      - hero  
+  
+networks:
+  hero:
+    driver: overlay
